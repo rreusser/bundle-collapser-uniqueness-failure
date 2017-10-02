@@ -9,7 +9,7 @@
     "stream-to-string": "^1.1.0"
   },
   "scripts": {
-    "bundle:raw": "browserify > bundle.js",
+    "bundle:raw": "browserify index.js > bundle.js",
     "bundle:cli": "browserify -p bundle-collapser/plugin index.js > bundle.cli.js",
     "bundle:script": "browserify -p bundle-collapser/plugin index.js > bundle.cli.js"
   },

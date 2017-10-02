@@ -1,7 +1,6 @@
 var browserify = require('browserify');
-var collapse = require('bundle-collapser');
+var collapse = require('bundle-collapser/plugin');
 var fs = require('fs');
 
-toString(browserify('index.js').bundle(), function (err, msg) {
-  fs.writeFileSync('bundle.script.js', collapse(msg))
-})
+browserify('index.js', {plugin: [collapse]}).bundle()
+  .pipe(fs.createWriteStream('bundle.script.js'));
