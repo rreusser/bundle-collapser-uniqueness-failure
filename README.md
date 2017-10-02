@@ -4,6 +4,8 @@ Created to demonstrate [bundle-collapser#20](https://github.com/substack/bundle-
 
 ## To reproduce
 
+### baseline
+
 Correct behavior using browserify alone:
 
 ```bash
@@ -12,6 +14,8 @@ $ node bundle.js
 aVal: a
 bVal: b
 ```
+
+### CLI
 
 Using bundle-collapser as a command line plugin. Values are incorrect:
 
@@ -22,22 +26,46 @@ aVal: a
 bVal: a
 ```
 
+### API plugin usage
+
 Using bundle-collapser as a script plugin does not resolve the issue:
 
 ```javascript
-# scripts/bundle.js:
+// scripts/plugin.js
 
 var browserify = require('browserify');
 var collapse = require('bundle-collapser/plugin');
 var fs = require('fs');
 
 browserify('index.js', {plugin: [collapse]}).bundle()
-  .pipe(fs.createWriteStream('bundle.script.js'));
+  .pipe(fs.createWriteStream('bundle.plugin.js'));
 ```
 
 ```bash
-$ node scripts/bundle.js
-$ node bundle.script.js
+$ node scripts/plugin.js
+$ node bundle.plugin.js
+aVal: a
+bVal: a
+```
+
+### API function usage
+
+```javascript
+// scripts/api.js
+
+var browserify = require('browserify');
+var collapse = require('bundle-collapser');
+var fs = require('fs');
+var toString = require('stream-to-string');
+
+toString(browserify('index.js').bundle(), function (err, str) {
+  collapse(str).pipe(fs.createWriteStream('bundle.api.js'));
+});
+```
+
+```bash
+$ node scripts/api.js
+$ node bundle.api.js
 aVal: a
 bVal: a
 ```
