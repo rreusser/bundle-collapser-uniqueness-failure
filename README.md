@@ -4,6 +4,21 @@ Created to demonstrate [bundle-collapser#20](https://github.com/substack/bundle-
 
 ## To reproduce
 
+### Setup
+
+Setup is two directories containing index files with similar `require('./component')` statements.
+
+```
+├─ index.js
+├─ a
+│  ├─ index.js
+│  └─ component.js
+└─ b
+   ├─ index.js
+   └─ component.js
+```
+
+
 ### baseline
 
 Correct behavior using browserify alone:
