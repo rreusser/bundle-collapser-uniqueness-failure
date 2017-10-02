@@ -1,4 +1,4 @@
-# bundle-collapser-test
+# bundle-collapser-uniqueness-failure
 
 Created to demonstrate [bundle-collapser#20](https://github.com/substack/bundle-collapser/issues/20), in which non-unique relative pathnames lead to non-unique bundle IDs, which leads to incorrect requires.
 
