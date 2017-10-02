@@ -6,81 +6,46 @@ Created to demonstrate [bundle-collapser#20](https://github.com/substack/bundle-
 
 ### Setup
 
-Setup is two directories containing index files with similar `require('./component')` statements.
+Setup is two directories containing index files with similar `require('./value')` statements.
 
 ```
 ├─ index.js
 ├─ a
 │  ├─ index.js
-│  └─ component.js
+│  └─ value.js
 └─ b
    ├─ index.js
-   └─ component.js
+   └─ value.js
 ```
 
+The key is that **the contents of `a/index.js` and `b/index.js` are identical.**
 
 ### baseline
 
 Correct behavior using browserify alone:
 
 ```bash
-$ browserify index.js > bundle.js
-$ node bundle.js 
-aVal: a
-bVal: b
+$ browserify index.js | indexhtmlify > index.html
+$ open index.html
 ```
 
-### CLI
+Renders:
 
-Using bundle-collapser as a command line plugin. Values are incorrect:
+```
+A: a
+B: b
+```
+
+### bundle-collapser
+
+Using bundle-collapser results in relative path resolution collisions when file contents are identical.
 
 ```bash
-$ browserify -p bundle-collapser/plugin index.js > bundle.cli.js
-$ node bundle.cli.js 
-aVal: a
-bVal: a
+$ browserify -p bundle-collapser/plugin index.js | indexhtmlify > index.collapsed.html
+$ open index.collapsed.html
 ```
 
-### API plugin usage
-
-Using bundle-collapser as a script plugin does not resolve the issue:
-
-```javascript
-// scripts/plugin.js
-
-var browserify = require('browserify');
-var collapse = require('bundle-collapser/plugin');
-var fs = require('fs');
-
-browserify('index.js', {plugin: [collapse]}).bundle()
-  .pipe(fs.createWriteStream('bundle.plugin.js'));
 ```
-
-```bash
-$ node scripts/plugin.js
-$ node bundle.plugin.js
-aVal: a
-bVal: a
-```
-
-### API function usage
-
-```javascript
-// scripts/api.js
-
-var browserify = require('browserify');
-var collapse = require('bundle-collapser');
-var fs = require('fs');
-var toString = require('stream-to-string');
-
-toString(browserify('index.js').bundle(), function (err, str) {
-  collapse(str).pipe(fs.createWriteStream('bundle.api.js'));
-});
-```
-
-```bash
-$ node scripts/api.js
-$ node bundle.api.js
-aVal: a
-bVal: a
+A: a
+B: a
 ```
