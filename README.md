@@ -43,7 +43,7 @@ bVal: a
 
 ### API plugin usage
 
-Using bundle-collapser as a script plugin does not resolve the issue:
+Using bundle-collapser as a script plugin is (obviously?) the same:
 
 ```javascript
 // scripts/plugin.js
@@ -64,6 +64,8 @@ bVal: a
 ```
 
 ### API function usage
+
+Running it as a function directly leads to the same incorrect result:
 
 ```javascript
 // scripts/api.js
