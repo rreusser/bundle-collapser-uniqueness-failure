@@ -2,7 +2,7 @@
 
 Created to demonstrate [bundle-collapser#20](https://github.com/substack/bundle-collapser/issues/20), in which non-unique relative pathnames lead to non-unique bundle IDs, which leads to incorrect requires.
 
-For a reproduction in react, see: [bundle-collapser-uniqueness-failure](https://github.com/rreusser/bundle-collapser-uniqueness-failure). See also: [facebook/react#11049](https://github.com/facebook/react/issues/11049).
+For a reproduction in react, see: [bundle-collapser-uniqueness-failure#react](https://github.com/rreusser/bundle-collapser-uniqueness-failure). See also: [facebook/react#11049](https://github.com/facebook/react/issues/11049).
 
 ## To reproduce
 
